@@ -41,6 +41,7 @@ const submitForm = async () => {
       password: password.value
     });
     const data = res.data;
+   
 
     if (data.errors) {
       emailError.value = data.errors.email;

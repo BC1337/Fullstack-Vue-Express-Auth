@@ -1,16 +1,11 @@
 <template>
-  <nav>
-    <div class="nav-left">
-      <router-link to="/">Home</router-link> 
-    </div>
-    <div class="nav-right">
-      <router-link to="/signup">Sign up</router-link>
-      <router-link to="/login">Log in</router-link>
-    </div>
-
-  </nav>
+  <Navbar />
   <router-view/>
 </template>
+
+<script setup>
+  import Navbar from '@/components/Navbar'
+</script>
 
 <style>
 #app {
