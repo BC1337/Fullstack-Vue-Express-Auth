@@ -24,11 +24,16 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
 
 const email = ref('');
 const password = ref('');
 const emailError = ref('');
 const passwordError = ref('');
+
+const authStore = useAuthStore();
+const router = useRouter()
 
 const submitForm = async () => {
   // reset errors
@@ -42,17 +47,25 @@ const submitForm = async () => {
     });
     const data = res.data;
    
-
     if (data.errors) {
       emailError.value = data.errors.email;
       passwordError.value = data.errors.password;
     }
 
     if (data.user) {
-      location.assign('/');
+      router.push('/dashboard');
+      authStore.setLoggedIn(true);
+      
     }
   } catch (err) {
     console.log(err);
+     // Handle error response from server
+     if (err.response.status === 400) {
+        const errors = err.response.data.errors;
+        // Update errors object in data property
+        this.emailError = errors.email || '';
+        this.passwordError = errors.password || '';
+      }
   }
   return {
           email,
