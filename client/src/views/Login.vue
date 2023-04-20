@@ -53,7 +53,7 @@ const submitForm = async () => {
     }
 
     if (data.user) {
-      router.push('/dashboard');
+      router.push({ name: 'dashboard'});
       authStore.setLoggedIn(true);
       authStore.setUserEmail(email.value)
     }

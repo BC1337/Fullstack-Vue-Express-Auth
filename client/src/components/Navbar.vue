@@ -24,6 +24,7 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/authStore'
 import { computed } from 'vue'
+import router from '@/router';
 
 const authStore = useAuthStore();
 
@@ -44,6 +45,7 @@ const signOut = async () => {
     // Make an API request to the /logout endpoint on the backend
     await axios.get('http://localhost:3000/logout');
     console.log('Successful logout');
+    router.push('/');
   } catch (err) {
     console.log(err);
   }
