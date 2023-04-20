@@ -13,7 +13,12 @@ app.use(express.static('public'));
 // allows us to recieve data as JSON in req.body
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({ origin: 'http://localhost:8080' })); // allow requests from localhost:8080
+app.use(cors({ origin: 'http://localhost:8080' }));
+
+
+
+
+
 // database connection
 const dbURI = process.env.MONGO_URI;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
@@ -22,7 +27,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 
 // routes
 app.get('*', checkUser)
-app.get('/', (req, res) => res.render('home'));
-app.get('/smoothies', requireAuth, (req, res) => res.render('smoothies'));
+app.get('/', (req, res) => {
+  // Handle the request logic here
+  // For example, you can send a response back to the client
+  res.send('Hello from the server!');
+});
+
 app.use(authRoutes)
 

@@ -55,7 +55,7 @@ const submitForm = async () => {
     if (data.user) {
       router.push('/dashboard');
       authStore.setLoggedIn(true);
-      
+      authStore.setUserEmail(email.value)
     }
   } catch (err) {
     console.log(err);

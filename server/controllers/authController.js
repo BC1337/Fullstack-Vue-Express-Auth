@@ -55,6 +55,7 @@ module.exports.signup_post = async (req, res) => {
         // create a user in the database and assign the data to user
        const user = await User.create({ email, password })
        const token = createToken(user._id)
+        // httpOnly is a security measure to make it so cookie can not be seen in the dev tools only by hhtp !
        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
        res.status(201).json({ user: user._id })
     }
@@ -70,8 +71,10 @@ module.exports.login_post = async (req, res) => {
     try {
         const user = await User.login( email, password )
         const token = createToken(user._id)
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
+        // httpOnly: true,
+        res.cookie('jwt', token, {  maxAge: maxAge * 1000})
         res.status(200).json({ user: user._id })
+        console.log("Inside login_post function");
     }
     catch (err) {
         const errors = handleErrors(err)
@@ -80,6 +83,12 @@ module.exports.login_post = async (req, res) => {
 }
 
 module.exports.logout_get = (req, res) => {
-    res.cookie('jwt', '', { maxAge: 1 })
-    res.redirect('/')
+    try{
+        res.cookie('jwt', '', { maxAge: -1 })
+        res.redirect('/')
+        console.log('successfull logout')
+    } catch (err) {
+        console.log(err.message || err)
+    }
+    
 }

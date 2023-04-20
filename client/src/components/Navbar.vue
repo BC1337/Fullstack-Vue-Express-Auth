@@ -5,16 +5,17 @@
       <router-link to="/dashboard">Dashboard</router-link>
     </div>
     <div class="nav-right">
-      <div v-if="loggedIn">
-     
+      <div v-if="loggedIn" class="nav-right-inner">
+        <p class="display-email">{{ userEmail }}</p>
         <button class="signout-btn" @click="handleSignOut" >Sign out</button>
       </div>
+    </div>
       <div v-if="!loggedIn" class="auth">
         <router-link to="/signup">Sign up</router-link>
         <router-link to="/login">Log in</router-link>
       </div>
      
-    </div>
+    
 </nav>
   
 </template>
@@ -52,10 +53,14 @@ const loggedIn = computed(() => {
   return authStore.isLoggedIn; // Access loggedIn status from store
 });
 
+const userEmail = computed(() => authStore.userEmail)
 
 </script>
 
 <style scoped>
+.display-email{
+  font-size: .8em;
+}
   nav {
   height: 70px;
   margin-bottom: 55px;
@@ -78,6 +83,18 @@ nav a.router-link-exact-active {
   display: flex;
   margin-left: auto; 
   justify-content: space-evenly;
+  flex-direction: row;
+}
+@media (max-width: 475px) {
+    .nav-right-inner {
+      flex-direction: column; /* Update flex-direction to column */
+      gap: 0; /* Remove gap between items */
+    }
+  }
+.nav-right-inner {
+  display: flex; 
+  align-items: center; 
+  gap: 15px;
 }
 
 .nav-left {
