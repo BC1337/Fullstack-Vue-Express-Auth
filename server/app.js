@@ -1,10 +1,12 @@
 require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/authRoutes')
 const cookieParser = require('cookie-parser')
-const { requireAuth, checkUser } = require('./middleware/authMiddleware')
 const cors = require('cors');
+
+const authRoutes = require('./routes/authRoutes')
+const postsRoutes = require('./routes/postsRoutes')
+const { requireAuth, checkUser } = require('./middleware/authMiddleware')
 
 const app = express();
 
@@ -28,10 +30,9 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 // routes
 app.get('*', checkUser)
 app.get('/', (req, res) => {
-  // Handle the request logic here
-  // For example, you can send a response back to the client
   res.send('Hello from the server!');
 });
 
 app.use(authRoutes)
+app.use(postsRoutes)
 
