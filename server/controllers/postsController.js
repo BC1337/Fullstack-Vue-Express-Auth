@@ -3,8 +3,8 @@ const Post = require('../models/Posts');
 // Create a new post
 const createPost = async (req, res) => {
   try {
-    const { title, content, author } = req.body;
-    const post = new Post({ title, content, author });
+    const { content } = req.body;
+    const post = new Post({ content });
     await post.save();
     res.status(201).json({ success: true, message: 'Post created successfully', data: post });
   } catch (err) {
@@ -15,7 +15,7 @@ const createPost = async (req, res) => {
 // Get all posts
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate('author', 'username'); // Populate author field with username
+    const posts = await Post.find(); // Populate author field with username
     res.status(200).json({ success: true, message: 'Posts retrieved successfully', data: posts });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Failed to retrieve posts', error: err.message });
@@ -25,7 +25,7 @@ const getAllPosts = async (req, res) => {
 // Get a single post by ID
 const getPostById = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id).populate('author', 'username'); // Populate author field with username
+    const post = await Post.findById(req.params.id) // Populate author field with username
     if (!post) {
       return res.status(404).json({ success: false, message: 'Post not found' });
     }
@@ -39,7 +39,7 @@ const getPostById = async (req, res) => {
 const updatePostById = async (req, res) => {
   try {
     const { title, content } = req.body;
-    const post = await Post.findByIdAndUpdate(req.params.id, { title, content }, { new: true });
+    const post = await Post.findByIdAndUpdate(req.params.id, { content }, { new: true });
     if (!post) {
       return res.status(404).json({ success: false, message: 'Post not found' });
     }

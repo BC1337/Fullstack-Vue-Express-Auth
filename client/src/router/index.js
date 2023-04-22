@@ -44,7 +44,7 @@ router.beforeEach(async(to, from, next) => {
       // If user is not authenticated, redirect to login page
       next({ name: 'login' });
       await toast.error("Restricted access, Please Sign in first", {
-        timeout: 2000,
+        timeout: 3000,
       });
     } else {
       // If user is authenticated, proceed to next route
