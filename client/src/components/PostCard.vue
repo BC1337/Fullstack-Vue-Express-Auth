@@ -88,9 +88,8 @@ export default {
 .post-card .edit-btn {
   cursor: pointer;
   color: #007bff;
-  font-size: 14px;
+  font-size: 12px;
   margin-right: 10px;
-  padding: 2px;
 }
 
 @media (max-width: 600px) {

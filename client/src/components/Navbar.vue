@@ -59,11 +59,10 @@ const userEmail = computed(() => authStore.userEmail)
 
 </script>
 
-<style scoped>
-.display-email{
+<style scoped>.display-email{
   font-size: .8em;
 }
-  nav {
+nav {
   height: 70px;
   margin-bottom: 55px;
   background: #EEE;
@@ -87,12 +86,15 @@ nav a.router-link-exact-active {
   justify-content: space-evenly;
   flex-direction: row;
 }
-@media (max-width: 475px) {
-    .nav-right-inner {
-      flex-direction: column; /* Update flex-direction to column */
-      gap: 0; /* Remove gap between items */
-    }
+
+
+@media (max-width: 740px) {
+  .auth {
+    flex-direction: column;
+    row-gap: 10px;
+
   }
+}
 .nav-right-inner {
   display: flex; 
   align-items: center; 
@@ -130,5 +132,4 @@ nav a.router-link-exact-active {
   border-radius: 4px;
   padding: 5px;
 }
-
 </style>
