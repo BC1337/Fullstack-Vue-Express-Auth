@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter a password'],
         minlength: [6, 'Min Pass length is 6 characters'],
     },
+    createdAt: {
+      type: Date,
+      default: Date.now
+  },
 })
 
 // fire a function before doc saved to db

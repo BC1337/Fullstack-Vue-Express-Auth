@@ -15,7 +15,7 @@ const createPost = async (req, res) => {
 // Get all posts
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find(); // Populate author field with username
+    const posts = await Post.find();
     res.status(200).json({ success: true, message: 'Posts retrieved successfully', data: posts });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Failed to retrieve posts', error: err.message });
@@ -25,7 +25,7 @@ const getAllPosts = async (req, res) => {
 // Get a single post by ID
 const getPostById = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id) // Populate author field with username
+    const post = await Post.findById(req.params.id) 
     if (!post) {
       return res.status(404).json({ success: false, message: 'Post not found' });
     }

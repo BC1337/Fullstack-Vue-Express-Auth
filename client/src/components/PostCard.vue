@@ -48,7 +48,7 @@ export default {
       this.$emit('edit-post', this.post._id, this.updatedContent);
       this.editing = false;
     }
-  }
+  },
 }
 </script>
 

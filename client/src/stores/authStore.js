@@ -20,6 +20,6 @@ export const useAuthStore = defineStore({
     },
     getEmail() {
       return this.userEmail;
-    }
+    },
   }
 });

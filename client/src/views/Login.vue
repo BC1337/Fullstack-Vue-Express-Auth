@@ -5,14 +5,16 @@
         <h2>Login</h2>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" v-model="email" required>
+          <input type="email" placeholder="admin@test.dev" id="email" v-model="email" required>
           <div v-if="emailError" class="error">{{ emailError }}</div>
         </div>
+
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" v-model="password" required>
+          <input type="password" placeholder="admin1234"  id="password" v-model="password" required>
           <div v-if="passwordError" class="error">{{ passwordError }}</div>
         </div>
+
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Log in</button>
         </div>
@@ -58,15 +60,21 @@ const submitForm = async () => {
       authStore.setUserEmail(email.value)
     }
   } catch (err) {
+  if (err.response && err.response.status === 400) {
+    if (err.response.data.errors) {
+      emailError.value = err.response.data.errors.email;
+      passwordError.value = err.response.data.errors.password;
+    } else if (err.response.data.message) {
+      emailError.value = err.response.data.message;
+    } else {
+      emailError.value = 'An unknown error occurred.';
+    }
+  } else if (err.response && err.response.status === 401) {
+    passwordError.value = 'Invalid email or password.';
+  } else {
     console.log(err);
-     // Handle error response from server
-     if (err.response.status === 400) {
-        const errors = err.response.data.errors;
-        // Update errors object in data property
-        this.emailError = errors.email || '';
-        this.passwordError = errors.password || '';
-      }
   }
+ }
   return {
           email,
           password,

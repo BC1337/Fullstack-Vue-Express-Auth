@@ -41,21 +41,32 @@ const createToken = (id) => {
 
 
 module.exports.signup_post = async (req, res) => {
-    const { email, password } = req.body
-
+    const { username, email, password } = req.body
+  
     try {
-        // create a user in the database and assign the data to user
-       const user = await User.create({ email, password })
-       const token = createToken(user._id)
-        // httpOnly is a security measure to make it so cookie can not be seen in the dev tools only by hhtp !
-       res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
-       res.status(201).json({ user: user._id })
+      const user = await User.create({ username, email, password })
+      req.user = {
+        username: user.username,
+        _id: user._id
+      };
+      const token = createToken(user._id)
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
+      res.status(201).json({ user: user._id })
     }
     catch (err) {
-       const errors = handleErrors(err)
-        res.status(400).json({ errors })
+      const errors = handleErrors(err)
+      if (err.message.includes('user validation failed')) {
+        Object.values(err.errors).forEach(({ properties }) => {
+          if (properties.path === 'username') {
+            errors.username = properties.message;
+          } else {
+            errors[properties.path] = properties.message;
+          }
+        })
+      }
+      res.status(400).json({ errors })
     }
-}
+  }
 
 module.exports.login_post = async (req, res) => {
     const { email, password } = req.body
@@ -66,7 +77,6 @@ module.exports.login_post = async (req, res) => {
         // ,
         res.cookie('jwt', token, { httpOnly: true,  maxAge: maxAge * 1000})
         res.status(200).json({ user: user._id })
-        console.log("Inside login_post function");
     }
     catch (err) {
         const errors = handleErrors(err)

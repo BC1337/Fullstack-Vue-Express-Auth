@@ -1,13 +1,11 @@
 <template>
   <div class="home">
-    <h1>Home Page Content</h1>
+    <h1>Fullstack Vue & Express</h1>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Deleniti laborum hic exercitationem facere beatae temporibus
-      in fugiat unde ex non qui dolore blanditiis, fugit neque ab
-      adipisci illum maiores molestiae ipsum odit quidem assumenda.
-      Possimus, ullam unde impedit dolores illo ad repudiandae
-      architecto consectetur dolorem distinctio. Ducimus eligendi eum quas!
+      <span class="custom-color">Hello!</span> Thanks for checking my app out.
+       If you don't want to register an account the i will leave a pre-registered
+      account as placeholder details on the
+      <router-link to="/login" class="custom-link">login page</router-link>.
     </p>
   </div>
 </template>
@@ -22,6 +20,18 @@ export default {
 </script>
 
 <style scoped>
+ /* changes color on the first word of p tag */
+  .custom-color{
+    color: rgb(248, 143, 4);
+    font-size: 26px;
+    font-weight: 800;
+  }
+  /* changes color of login page and redirects to login page */
+  .custom-link{
+    color: #42b983;
+    font-weight: 800;
+    cursor: pointer;
+  }
   h1 {
     border-bottom: 1px solid black;
     width: 400px;
@@ -40,7 +50,7 @@ export default {
     }
 
     p {
-      width: 90%; /* Adjust width for smaller screens */
+      width: 100%; /* Adjust width for smaller screens */
       margin: 30px auto; /* Adjust margin for smaller screens */
     }
   }
