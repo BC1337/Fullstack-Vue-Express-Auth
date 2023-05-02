@@ -44,9 +44,8 @@ module.exports.signup_post = async (req, res) => {
     const { username, email, password } = req.body
   
     try {
-      const user = await User.create({ username, email, password })
+      const user = await User.create({ email, password })
       req.user = {
-        username: user.username,
         _id: user._id
       };
       const token = createToken(user._id)

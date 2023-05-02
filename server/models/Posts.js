@@ -12,7 +12,7 @@ const postsSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now
-  }
+  },
 });
 
 module.exports = mongoose.model('Post', postsSchema);

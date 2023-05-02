@@ -1,5 +1,6 @@
 const Post = require('../models/Posts');
 
+
 // Create a new post
 const createPost = async (req, res) => {
   try {
@@ -38,7 +39,7 @@ const getPostById = async (req, res) => {
 // Update a post by ID
 const updatePostById = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { content } = req.body;
     const post = await Post.findByIdAndUpdate(req.params.id, { content }, { new: true });
     if (!post) {
       return res.status(404).json({ success: false, message: 'Post not found' });
@@ -67,5 +68,5 @@ module.exports = {
   getAllPosts,
   getPostById,
   updatePostById,
-  deletePostById
+  deletePostById,
 };
