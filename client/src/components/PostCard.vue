@@ -11,7 +11,7 @@
         </form>
       </div>
     </div>
-    <div class="post-buttons"  v-if="userEmail === userEmail">
+    <div class="post-buttons" >
       <button class="edit-btn" @click="startEdit">Edit</button>
       <button class="delete-btn" @click="deletePost(post._id)">Delete</button>
     </div>
@@ -26,10 +26,6 @@ export default {
       type: Object,
       required: true
     },
-    userEmail: {
-      type: String,
-      required: true
-    }
   },
   data() {
     return {

@@ -14,7 +14,7 @@
               <PostCard v-for="post in posts"
                :key="post._id"
                 :post="post"
-                :userEmail="authStore.getEmail"
+  
                 @deletePost="deletePost"
                  @edit-post="editPost"/>
             </ul>
@@ -28,12 +28,12 @@
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import PostCard from '../components/PostCard.vue';
-  import { useAuthStore } from '@/stores/authStore';
+
   
   const content = ref('');
   const posts = ref([]);
   const postCount = ref(0);
-  const authStore = useAuthStore();
+
   
   // Fetch posts data from API
   const fetchPosts = async () => {
@@ -54,14 +54,11 @@
   // Create new post
   const createPost = async () => {
     try {
-      const email = authStore.getEmail
       const response = await axios.post('http://localhost:3000/create-post', { 
         content: content.value,
-        email: email
+        
        });
-
       const newPost = response.data.data;
-      newPost.email = email;
       posts.value.push(newPost);
       postCount.value++;
       content.value = '';
@@ -73,14 +70,9 @@
   // Delete post
   const deletePost = async (postId) => {
   try {
-    const email = authStore.getEmail;
     const postToDelete = posts.value.find(post => post._id === postId);
     if (!postToDelete) {
       console.error('Post not found:', postId);
-      return;
-    }
-    if (postToDelete.email !== email) {
-      console.error('You are not authorized to delete this post');
       return;
     }
     const response = await axios.delete(`http://localhost:3000/${postId}/`);
@@ -98,11 +90,6 @@
   // Edit post
   const editPost = async (postId, updatedContent) => {
   try {
-    // Get the post being edited
-    const post = posts.value.find(post => post._id === postId);
-
-    // Check if the authenticated user is the author of the post
-    if (post && post.email === authStore.getEmail) {
       // Send request to API to update post
       const response = await axios.put(`http://localhost:3000/${postId}`, { content: updatedContent });
       const updatedPost = response.data.data;
@@ -110,13 +97,9 @@
       // Update post in the local state
       const index = posts.value.findIndex(post => post._id === postId);
       posts.value[index] = updatedPost;
-    } else {
-      console.error('You are not authorized to edit this post');
-    }
-  } catch (error) {
+    } catch (error) {
     console.error('Failed to edit post:', error);
-  }
-}
+  }}
 
   </script>
   
